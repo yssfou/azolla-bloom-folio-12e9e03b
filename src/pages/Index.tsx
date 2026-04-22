@@ -1,16 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useState } from "react";
+import { I18nProvider } from "@/lib/i18n";
+import { Loader } from "@/components/azola/Loader";
+import { Navbar } from "@/components/azola/Navbar";
+import { Hero } from "@/components/azola/Hero";
+import { About } from "@/components/azola/About";
+import { Growth } from "@/components/azola/Growth";
+import { Benefits } from "@/components/azola/Benefits";
+import { HowTo } from "@/components/azola/HowTo";
+import { Business } from "@/components/azola/Business";
+import { Gallery } from "@/components/azola/Gallery";
+import { Testimonials } from "@/components/azola/Testimonials";
+import { Contact } from "@/components/azola/Contact";
+import { Footer } from "@/components/azola/Footer";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 1400);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <I18nProvider>
+      <Loader show={loading} />
+      <main className="relative bg-background text-foreground">
+        <Navbar />
+        <Hero />
+        <About />
+        <Growth />
+        <Benefits />
+        <HowTo />
+        <Business />
+        <Gallery />
+        <Testimonials />
+        <Contact />
+        <Footer />
+      </main>
+    </I18nProvider>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
