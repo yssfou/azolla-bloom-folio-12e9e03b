@@ -2,7 +2,7 @@ export type Lang = "ar" | "fr";
 
 export const translations = {
   ar: {
-    dir: "rtl" as const,
+    dir: "rtl" as "rtl" | "ltr",
     nav: {
       about: "حول",
       growth: "النمو",
@@ -111,7 +111,7 @@ export const translations = {
     },
   },
   fr: {
-    dir: "ltr" as const,
+    dir: "ltr" as "rtl" | "ltr",
     nav: {
       about: "À propos",
       growth: "Croissance",
