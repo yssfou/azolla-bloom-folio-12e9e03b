@@ -108,7 +108,7 @@ export const Contact = () => {
             className="space-y-5"
           >
             <a
-              href="https://wa.me/216"
+              href="https://wa.me/21622476723"
               target="_blank"
               rel="noreferrer"
               className="group flex items-center gap-4 rounded-3xl p-6 bg-gradient-fresh text-deep shadow-glow hover:scale-[1.02] transition-transform duration-500 ease-spring"
