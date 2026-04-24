@@ -142,12 +142,6 @@ export const Hero = () => {
               {i === 1 ? (
                 <span className="relative gradient-text">
                   {word}
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 1.4, delay: 1.2, ease }}
-                    className="absolute -bottom-2 start-0 w-full h-[3px] bg-gradient-fresh origin-start rounded-full"
-                  />
                 </span>
               ) : (
                 word
