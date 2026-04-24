@@ -47,6 +47,8 @@ export const translations = {
         { name: "الذرة", value: 22, color: "water" },
       ],
       compareNote: "إنتاج البروتين النسبي لكل هكتار في الأسبوع",
+      coverageLabel: "تغطية أزولا الحية",
+      coverageNote: "تتقدّم التغطية مع تمرير الصفحة — محاكاة لانتشار النبتة على الماء.",
     },
     benefits: {
       tag: "الفوائد",
@@ -157,6 +159,8 @@ export const translations = {
         { name: "Maïs", value: 22, color: "water" },
       ],
       compareNote: "Production relative de protéines par hectare et par semaine",
+      coverageLabel: "Couverture Azolla en direct",
+      coverageNote: "La couverture progresse au défilement — simulation de la propagation sur l'eau.",
     },
     benefits: {
       tag: "Bénéfices",
