@@ -112,14 +112,14 @@ export const Hero = () => {
       {/* Content */}
       <motion.div
         style={{ y: yFg, opacity }}
-        className="relative z-10 mx-auto max-w-7xl px-6 md:px-10 pt-40 md:pt-48 pb-32 min-h-screen flex flex-col justify-center will-change-transform"
+        className="relative z-10 mx-auto max-w-6xl px-6 md:px-10 pt-32 md:pt-24 pb-32 min-h-screen flex flex-col items-center justify-center text-center will-change-transform"
       >
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease }}
-          className="inline-flex items-center gap-2 self-start glass-dark rounded-full px-4 py-2 mb-8 hover:border-fresh/60 transition-colors duration-500"
+          className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-8 hover:border-fresh/60 transition-colors duration-500"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fresh opacity-75" />
@@ -130,7 +130,7 @@ export const Hero = () => {
         </motion.div>
 
         {/* Headline */}
-        <h1 className="font-display text-mint text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-balance max-w-5xl leading-[1.05]">
+        <h1 className="font-display text-mint text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-balance max-w-5xl leading-[1.05] mx-auto">
           {t.hero.headline.map((word, i) => (
             <motion.span
               key={`${lang}-${i}`}
@@ -161,7 +161,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.15, ease }}
-          className="mt-8 max-w-2xl text-lg md:text-xl text-mint/75 leading-relaxed"
+          className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-mint/75 leading-relaxed"
         >
           {t.hero.subtitle}
         </motion.p>
@@ -171,7 +171,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.35, ease }}
-          className="mt-10 flex flex-wrap gap-4"
+          className="mt-10 flex flex-wrap justify-center gap-4"
         >
           <a
             href="#about"
@@ -196,7 +196,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 1.6, ease }}
-          className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl"
+          className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl mx-auto w-full"
         >
           {t.hero.stats.map((s, i) => (
             <motion.div
@@ -224,7 +224,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.2, duration: 1 }}
-          className="absolute bottom-10 start-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-mint/70 hover:text-fresh transition-colors duration-500"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-mint/70 hover:text-fresh transition-colors duration-500"
         >
           <span className="text-[10px] tracking-[0.4em] uppercase">{t.hero.scroll}</span>
           <span className="relative grid place-items-center w-9 h-9 rounded-full border border-mint/30">
