@@ -112,14 +112,14 @@ export const Hero = () => {
       {/* Content */}
       <motion.div
         style={{ y: yFg, opacity }}
-        className="relative z-10 mx-auto max-w-7xl px-6 md:px-10 pt-40 md:pt-48 pb-32 min-h-screen flex flex-col justify-center will-change-transform"
+        className="relative z-10 mx-auto max-w-6xl px-6 md:px-10 pt-32 md:pt-24 pb-32 min-h-screen flex flex-col items-center justify-center text-center will-change-transform"
       >
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease }}
-          className="inline-flex items-center gap-2 self-start glass-dark rounded-full px-4 py-2 mb-8 hover:border-fresh/60 transition-colors duration-500"
+          className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-8 hover:border-fresh/60 transition-colors duration-500"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fresh opacity-75" />
