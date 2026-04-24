@@ -161,7 +161,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.15, ease }}
-          className="mt-8 max-w-2xl text-lg md:text-xl text-mint/75 leading-relaxed"
+          className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-mint/75 leading-relaxed"
         >
           {t.hero.subtitle}
         </motion.p>
