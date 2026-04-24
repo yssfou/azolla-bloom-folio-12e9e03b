@@ -161,6 +161,67 @@
     text-wrap: balance;
   }
 
+  /* Premium hover utilities */
+  .hover-lift {
+    @apply transition-all duration-700 ease-spring;
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: var(--shadow-deep);
+  }
+  .hover-glow {
+    @apply transition-all duration-500 ease-spring;
+  }
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+  .hover-zoom-img {
+    transition: transform 1.4s var(--ease-spring), filter 0.8s ease;
+  }
+  .group:hover .hover-zoom-img {
+    transform: scale(1.12);
+    filter: saturate(1.15);
+  }
+
+  /* Reveal animations (GSAP-style scroll appearance via CSS) */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+  @keyframes reveal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes reveal-scale {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .reveal-up {
+    animation: reveal-up 1.1s var(--ease-spring) both;
+  }
+  .reveal-scale {
+    animation: reveal-scale 1.2s var(--ease-spring) both;
+  }
+
+  /* Shimmer sweep used for highlighted cards */
+  @keyframes shimmer-sweep {
+    0% { transform: translateX(-120%) skewX(-20deg); }
+    100% { transform: translateX(220%) skewX(-20deg); }
+  }
+  .shimmer-sweep {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, hsl(var(--mint) / 0.35), transparent);
+    animation: shimmer-sweep 3s var(--ease-spring) infinite;
+    pointer-events: none;
+  }
+
+  /* Glowing ring pulse for the coverage badge */
+  @keyframes ring-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary-green) / 0.6), 0 0 30px hsl(var(--primary-green) / 0.4); }
+    50% { box-shadow: 0 0 0 14px hsl(var(--primary-green) / 0), 0 0 60px hsl(var(--primary-green) / 0.7); }
+  }
+  .animate-ring-pulse { animation: ring-pulse 2.4s var(--ease-spring) infinite; }
+
   /* Water surface */
   @keyframes float-leaf {
     0%, 100% { transform: translateY(0) rotate(0deg); }
