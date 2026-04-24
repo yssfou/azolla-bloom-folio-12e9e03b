@@ -130,7 +130,7 @@ export const Hero = () => {
         </motion.div>
 
         {/* Headline */}
-        <h1 className="font-display text-mint text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-balance max-w-5xl leading-[1.05]">
+        <h1 className="font-display text-mint text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-balance max-w-5xl leading-[1.05] mx-auto">
           {t.hero.headline.map((word, i) => (
             <motion.span
               key={`${lang}-${i}`}
