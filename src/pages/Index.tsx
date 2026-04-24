@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider } from "@/lib/i18n";
 import { Loader } from "@/components/azola/Loader";
 import { Navbar } from "@/components/azola/Navbar";
@@ -12,6 +13,7 @@ import { Gallery } from "@/components/azola/Gallery";
 import { Testimonials } from "@/components/azola/Testimonials";
 import { Contact } from "@/components/azola/Contact";
 import { Footer } from "@/components/azola/Footer";
+import { SectionTransition } from "@/components/azola/SectionTransition";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -20,19 +22,38 @@ const Index = () => {
     return () => clearTimeout(t);
   }, []);
 
+  // Smooth scroll progress bar at top of page
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.4 });
+
   return (
     <I18nProvider>
       <Loader show={loading} />
+
+      {/* Global scroll progress */}
+      <motion.div
+        aria-hidden
+        style={{ scaleX: progress }}
+        className="fixed top-0 inset-x-0 h-[2px] origin-start z-[60] bg-gradient-fresh shadow-glow pointer-events-none"
+      />
+
       <main className="relative bg-background text-foreground">
         <Navbar />
         <Hero />
+        <SectionTransition from="deep" to="surface" variant="wave" />
         <About />
+        <SectionTransition from="surface" to="emerald" variant="wave-soft" />
         <Growth />
+        <SectionTransition from="emerald" to="surface" variant="blob" />
         <Benefits />
+        <SectionTransition from="surface" to="water" variant="wave-soft" />
         <HowTo />
+        <SectionTransition from="water" to="surface" variant="wave" flip />
         <Business />
         <Gallery />
+        <SectionTransition from="surface" to="water" variant="blob" />
         <Testimonials />
+        <SectionTransition from="water" to="emerald" variant="wave" />
         <Contact />
         <Footer />
       </main>
