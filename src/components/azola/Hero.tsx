@@ -224,7 +224,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.2, duration: 1 }}
-          className="absolute bottom-10 start-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-mint/70 hover:text-fresh transition-colors duration-500"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-mint/70 hover:text-fresh transition-colors duration-500"
         >
           <span className="text-[10px] tracking-[0.4em] uppercase">{t.hero.scroll}</span>
           <span className="relative grid place-items-center w-9 h-9 rounded-full border border-mint/30">
