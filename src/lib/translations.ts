@@ -19,6 +19,11 @@ export const translations = {
       cta1: "اكتشف أكثر",
       cta2: "ابدأ مشروعك",
       scroll: "اكتشف",
+      stats: [
+        { v: "×2", l: "كل 3–5 أيام" },
+        { v: "30٪", l: "بروتين خام" },
+        { v: "0", l: "أسمدة كيميائية" },
+      ],
     },
     about: {
       tag: "ما هي أزولا؟",
@@ -131,6 +136,11 @@ export const translations = {
       cta1: "Découvrir",
       cta2: "Démarrer votre projet",
       scroll: "Explorer",
+      stats: [
+        { v: "×2", l: "tous les 3–5 jours" },
+        { v: "30 %", l: "protéines brutes" },
+        { v: "0", l: "engrais chimique" },
+      ],
     },
     about: {
       tag: "Qu'est-ce que l'Azolla ?",
