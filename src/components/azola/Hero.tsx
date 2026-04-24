@@ -171,7 +171,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.35, ease }}
-          className="mt-10 flex flex-wrap gap-4"
+          className="mt-10 flex flex-wrap justify-center gap-4"
         >
           <a
             href="#about"
