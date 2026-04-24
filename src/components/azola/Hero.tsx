@@ -196,7 +196,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 1.6, ease }}
-          className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl"
+          className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl mx-auto w-full"
         >
           {t.hero.stats.map((s, i) => (
             <motion.div
