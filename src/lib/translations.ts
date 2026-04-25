@@ -115,6 +115,7 @@ export const translations = {
     footer: {
       tagline: "زراعة المستقبل، اليوم.",
       rights: "جميع الحقوق محفوظة",
+      credit: "تم الإنشاء من قبل يوسف العرابي",
     },
   },
   fr: {
@@ -232,6 +233,7 @@ export const translations = {
     footer: {
       tagline: "Cultiver l'avenir, dès aujourd'hui.",
       rights: "Tous droits réservés",
+      credit: "Créé par Youssef Ourabi",
     },
   },
 };

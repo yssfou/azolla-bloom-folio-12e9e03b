@@ -13,7 +13,10 @@ export const Footer = () => {
           <span className="font-display text-lg text-mint">AZOLA</span>
         </div>
         <p className="text-sm">{t.footer.tagline}</p>
-        <p className="text-xs">© {new Date().getFullYear()} AZOLA. {t.footer.rights}.</p>
+        <div className="flex flex-col items-center md:items-end gap-1">
+          <p className="text-xs">© {new Date().getFullYear()} AZOLA. {t.footer.rights}.</p>
+          <p className="text-xs text-mint/50 italic">{t.footer.credit}</p>
+        </div>
       </div>
     </footer>
   );
