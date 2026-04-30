@@ -8,7 +8,9 @@ interface I18nCtx {
   toggle: () => void;
 }
 
-const Ctx = createContext<I18nCtx | null>(null);
+const g = globalThis as unknown as { __azolaI18nCtx?: React.Context<I18nCtx | null> };
+const Ctx = g.__azolaI18nCtx ?? createContext<I18nCtx | null>(null);
+g.__azolaI18nCtx = Ctx;
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>("ar");
