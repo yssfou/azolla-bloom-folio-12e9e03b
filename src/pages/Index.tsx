@@ -16,6 +16,51 @@ import { Contact } from "@/components/azola/Contact";
 import { Footer } from "@/components/azola/Footer";
 import { SectionTransition } from "@/components/azola/SectionTransition";
 
+const PageContent = ({ loading }: { loading: boolean }) => {
+  const { lang } = useI18n();
+
+  // Re-init GSAP scroll effects after loader is gone and whenever language changes
+  useEffect(() => {
+    if (loading) return;
+    // Wait one frame so DOM is fully painted with new language strings
+    const id = window.requestAnimationFrame(() => {
+      // Small delay so any layout shifts settle
+      window.setTimeout(() => {
+        cleanupRef.current?.();
+        cleanupRef.current = initGsapScrollEffects();
+      }, 60);
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [loading, lang]);
+
+  const cleanupRef = (PageContent as any)._cleanupRef ??= { current: null as null | (() => void) };
+
+  useEffect(() => () => cleanupRef.current?.(), []);
+
+  return (
+    <main className="relative bg-background text-foreground">
+      <Navbar />
+      <Hero />
+      <SectionTransition from="deep" to="surface" variant="wave" />
+      <About />
+      <SectionTransition from="surface" to="emerald" variant="wave-soft" />
+      <Growth />
+      <SectionTransition from="emerald" to="surface" variant="blob" />
+      <Benefits />
+      <SectionTransition from="surface" to="water" variant="wave-soft" />
+      <HowTo />
+      <SectionTransition from="water" to="surface" variant="wave" flip />
+      <Business />
+      <Gallery />
+      <SectionTransition from="surface" to="water" variant="blob" />
+      <Testimonials />
+      <SectionTransition from="water" to="emerald" variant="wave" />
+      <Contact />
+      <Footer />
+    </main>
+  );
+};
+
 const Index = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -38,26 +83,7 @@ const Index = () => {
         className="fixed top-0 inset-x-0 h-[2px] origin-start z-[60] bg-gradient-fresh shadow-glow pointer-events-none"
       />
 
-      <main className="relative bg-background text-foreground">
-        <Navbar />
-        <Hero />
-        <SectionTransition from="deep" to="surface" variant="wave" />
-        <About />
-        <SectionTransition from="surface" to="emerald" variant="wave-soft" />
-        <Growth />
-        <SectionTransition from="emerald" to="surface" variant="blob" />
-        <Benefits />
-        <SectionTransition from="surface" to="water" variant="wave-soft" />
-        <HowTo />
-        <SectionTransition from="water" to="surface" variant="wave" flip />
-        <Business />
-        <Gallery />
-        <SectionTransition from="surface" to="water" variant="blob" />
-        <Testimonials />
-        <SectionTransition from="water" to="emerald" variant="wave" />
-        <Contact />
-        <Footer />
-      </main>
+      <PageContent loading={loading} />
     </I18nProvider>
   );
 };
