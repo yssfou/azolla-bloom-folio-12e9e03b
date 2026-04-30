@@ -47,6 +47,28 @@ export const HowTo = () => {
             })}
           </div>
         </div>
+
+        {/* Tutorial video */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.9, ease }}
+          className="mt-20 mx-auto max-w-4xl"
+        >
+          <div className="relative rounded-3xl overflow-hidden shadow-deep border border-fresh/30 bg-deep">
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/vRJx2zkY0kk"
+                title="Comment cultiver l'Azolla"
+                frameBorder={0}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
