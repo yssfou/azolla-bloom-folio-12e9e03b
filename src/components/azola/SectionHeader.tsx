@@ -27,29 +27,21 @@ export const SectionHeader = ({ tag, title, subtitle, align = "start", invert = 
           <span className="w-1.5 h-1.5 rounded-full bg-fresh" /> {tag}
         </motion.div>
       )}
-      <motion.h2
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 1, delay: 0.05, ease }}
-        className={`no-gsap font-display text-4xl md:text-5xl lg:text-6xl text-balance ${
+      <h2
+        className={`font-display text-4xl md:text-5xl lg:text-6xl text-balance ${
           invert ? "text-mint" : "text-deep"
         }`}
       >
         {title}
-      </motion.h2>
+      </h2>
       {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 1, delay: 0.15, ease }}
+        <p
           className={`text-lg md:text-xl leading-relaxed max-w-2xl ${
             invert ? "text-mint/80" : "text-muted-foreground"
           }`}
         >
           {subtitle}
-        </motion.p>
+        </p>
       )}
     </div>
   );
