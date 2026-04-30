@@ -32,7 +32,7 @@ export const SectionHeader = ({ tag, title, subtitle, align = "start", invert = 
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 1, delay: 0.05, ease }}
-        className={`font-display text-4xl md:text-5xl lg:text-6xl text-balance ${
+        className={`no-gsap font-display text-4xl md:text-5xl lg:text-6xl text-balance ${
           invert ? "text-mint" : "text-deep"
         }`}
       >
