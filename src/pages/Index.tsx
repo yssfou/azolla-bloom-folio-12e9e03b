@@ -18,24 +18,23 @@ import { SectionTransition } from "@/components/azola/SectionTransition";
 
 const PageContent = ({ loading }: { loading: boolean }) => {
   const { lang } = useI18n();
+  const cleanupRef = useRef<null | (() => void)>(null);
 
   // Re-init GSAP scroll effects after loader is gone and whenever language changes
   useEffect(() => {
     if (loading) return;
-    // Wait one frame so DOM is fully painted with new language strings
     const id = window.requestAnimationFrame(() => {
-      // Small delay so any layout shifts settle
       window.setTimeout(() => {
         cleanupRef.current?.();
         cleanupRef.current = initGsapScrollEffects();
-      }, 60);
+      }, 80);
     });
-    return () => window.cancelAnimationFrame(id);
+    return () => {
+      window.cancelAnimationFrame(id);
+      cleanupRef.current?.();
+      cleanupRef.current = null;
+    };
   }, [loading, lang]);
-
-  const cleanupRef = (PageContent as any)._cleanupRef ??= { current: null as null | (() => void) };
-
-  useEffect(() => () => cleanupRef.current?.(), []);
 
   return (
     <main className="relative bg-background text-foreground">
