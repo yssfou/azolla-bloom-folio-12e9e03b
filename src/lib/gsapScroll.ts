@@ -42,11 +42,14 @@ export const initGsapScrollEffects = () => {
 
   const ctx = gsap.context(() => {
     // -------- Headings: word-by-word reveal on scroll --------
+    // Skip word splitting for RTL languages (e.g. Arabic) — splitting words
+    // into inline-block spans breaks shaping, ligatures and reading order.
+    const isRTL = document.documentElement.dir === "rtl";
     const headings = gsap.utils.toArray<HTMLElement>(
       "section h2, section h3"
     );
     headings.forEach((h) => {
-      const words = splitIntoWords(h);
+      const words = isRTL ? [] : splitIntoWords(h);
       if (!words.length) {
         // Fallback: animate the whole heading
         gsap.fromTo(
