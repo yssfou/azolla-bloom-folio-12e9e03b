@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import logoA from "@/assets/logo-primary.png";
-import logoB from "@/assets/logo-secondary.png";
 
 interface Props {
   onComplete?: () => void;
@@ -9,305 +7,338 @@ interface Props {
 
 export const LoadingScreen = ({ onComplete }: Props) => {
   const [mounted, setMounted] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
-  const logoARef = useRef<HTMLImageElement>(null);
-  const logoBRef = useRef<HTMLImageElement>(null);
+  const nameARef = useRef<HTMLDivElement>(null);
+  const nameBRef = useRef<HTMLDivElement>(null);
   const flashRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const speedLinesRef = useRef<HTMLDivElement>(null);
+  const swRef = useRef<HTMLDivElement>(null);
+  const lLRef = useRef<HTMLDivElement>(null);
+  const lRRef = useRef<HTMLDivElement>(null);
   const brandRef = useRef<HTMLDivElement>(null);
-  const barFillRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const partsRef = useRef<HTMLDivElement>(null);
+  const cracksRef = useRef<HTMLDivElement>(null);
+  const vsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
     const ctx = gsap.context(() => {
+      const nameA = nameARef.current!;
+      const nameB = nameBRef.current!;
+      const flash = flashRef.current!;
+      const sw = swRef.current!;
+      const lL = lLRef.current!;
+      const lR = lRRef.current!;
+      const brand = brandRef.current!;
+      const bar = barRef.current!;
+      const parts = partsRef.current!;
+      const cracks = cracksRef.current!;
+      const screen = screenRef.current!;
+      const vs = vsRef.current!;
+
+      gsap.set(nameA, { x: -900, opacity: 0, rotation: 0, scale: 1 });
+      gsap.set(nameB, { x: 900, opacity: 1, scale: 1.05, rotation: 0 });
+      gsap.set(flash, { opacity: 0 });
+      gsap.set(sw, { scale: 0, opacity: 0 });
+      gsap.set(lL, { opacity: 0 });
+      gsap.set(lR, { opacity: 0 });
+      gsap.set(brand, { opacity: 0 });
+      gsap.set(bar, { width: "0%" });
+      gsap.set(cracks, { opacity: 0 });
+      gsap.set(vs, { opacity: 0 });
+
       const tl = gsap.timeline({
         onComplete: () => {
-          setMounted(false);
-          onComplete?.();
-        },
-      });
-
-      // Initial states
-      gsap.set(logoARef.current, { x: "-100vw", opacity: 0, scale: 0.8, rotation: 0 });
-      gsap.set(logoBRef.current, { x: "110vw", opacity: 1, scale: 1.1, filter: "blur(3px)" });
-      gsap.set(flashRef.current, { opacity: 0 });
-      gsap.set(ringRef.current, { scale: 0, opacity: 0 });
-      gsap.set(speedLinesRef.current, { opacity: 0 });
-      gsap.set(brandRef.current?.querySelectorAll(".brand-letter") ?? [], { y: 20, opacity: 0 });
-      gsap.set(barFillRef.current, { scaleX: 0, transformOrigin: "left center" });
-
-      // PHASE 1 — Logo A appears (0 → 1.0s)
-      tl.to(logoARef.current, {
-        x: "0vw",
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        ease: "back.out(1.4)",
-      })
-      .to({}, { duration: 0.2 }); // hold
-
-      // PHASE 2 — Logo B charges in (1.0 → 1.6s)
-      tl.to(speedLinesRef.current, { opacity: 1, duration: 0.1 }, "phase2")
-        .to(
-          logoBRef.current,
-          {
-            x: "0vw",
-            scale: 1,
-            filter: "blur(0px)",
-            duration: 0.55,
-            ease: "power4.in",
-          },
-          "phase2"
-        );
-
-      // PHASE 3 — COLLISION (1.6 → 1.95s) — fire all in same frame
-      tl.add("impact")
-        .to(speedLinesRef.current, { opacity: 0, duration: 0.1 }, "impact")
-        // flash
-        .to(flashRef.current, { opacity: 1, duration: 0.05, ease: "none" }, "impact")
-        .to(flashRef.current, { opacity: 0, duration: 0.1, ease: "none" }, "impact+=0.05")
-        // shockwave
-        .fromTo(
-          ringRef.current,
-          { scale: 0, opacity: 1 },
-          { scale: 3, opacity: 0, duration: 0.4, ease: "expo.out" },
-          "impact"
-        )
-        // logo A knocked out
-        .to(
-          logoARef.current,
-          {
-            x: "-110vw",
-            rotation: -25,
-            scale: 0.6,
-            opacity: 0,
-            duration: 0.35,
-            ease: "power4.in",
-          },
-          "impact"
-        )
-        // screen shake
-        .to(
-          screenRef.current,
-          { x: "+=8", duration: 0.05, repeat: 5, yoyo: true, ease: "none" },
-          "impact"
-        );
-
-      // particle burst
-      const particles = particlesRef.current?.querySelectorAll<HTMLDivElement>(".particle") ?? [];
-      particles.forEach((p) => {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = gsap.utils.random(40, 80);
-        tl.fromTo(
-          p,
-          { x: 0, y: 0, scale: 0, opacity: 1 },
-          {
-            x: Math.cos(angle) * dist,
-            y: Math.sin(angle) * dist,
-            scale: gsap.utils.random(0.8, 1.4),
+          gsap.to(screen, {
             opacity: 0,
             duration: 0.5,
-            ease: "power2.out",
-          },
-          "impact"
-        );
+            ease: "power2.inOut",
+            onComplete: () => {
+              setMounted(false);
+              onComplete?.();
+            },
+          });
+        },
       });
 
-      // PHASE 4 — Logo B takes its place (1.95 → 2.8s)
-      tl.to(
-        logoBRef.current,
-        {
-          scale: 1.08,
-          duration: 0.3,
-          ease: "elastic.out(1, 0.4)",
-        },
-        "+=0.05"
-      )
-        .to(logoBRef.current, { scale: 1, duration: 0.3, ease: "elastic.out(1, 0.4)" })
-        .to(
-          logoBRef.current,
-          {
-            boxShadow: "0 0 40px rgba(90,103,63,0.5)",
-            duration: 0.4,
-            yoyo: true,
-            repeat: 1,
+      tl.to(nameA, { x: 0, opacity: 1, duration: 0.9, ease: "back.out(1.3)" })
+        .to(vs, { opacity: 1, duration: 0.2 }, "-=0.1")
+        .to(nameA, { duration: 0.35 })
+        .to(lL, { opacity: 1, duration: 0.1 })
+        .to(lR, { opacity: 1, duration: 0.1 }, "<")
+        .to(nameB, { x: 0, duration: 0.5, ease: "power4.in" }, "<")
+        .to(lL, { opacity: 0, duration: 0.08 }, "-=0.1")
+        .to(lR, { opacity: 0, duration: 0.08 }, "<")
+        .to(vs, { opacity: 0, duration: 0.06 }, "<")
+        .to(flash, { opacity: 1, duration: 0.06 }, "-=0.02")
+        .to(flash, { opacity: 0, duration: 0.1 })
+        .call(
+          () => {
+            gsap.set(sw, { scale: 0, opacity: 1 });
+            gsap.to(sw, { scale: 4.5, opacity: 0, duration: 0.7, ease: "expo.out" });
+            gsap.set(cracks, { opacity: 1 });
+            gsap.to(cracks, { opacity: 0, duration: 0.55, delay: 0.2 });
+            gsap.to(screen, {
+              x: 16,
+              duration: 0.05,
+              repeat: 8,
+              yoyo: true,
+              ease: "none",
+              onComplete: () => gsap.set(screen, { x: 0 }),
+            });
+            const colors = ["#3dba5a", "#dd1a00", "#ffffff", "#ff6600", "#ffee00"];
+            for (let i = 0; i < 16; i++) {
+              const p = document.createElement("div");
+              const a = (i / 16) * Math.PI * 2;
+              const d = 80 + Math.random() * 70;
+              const sz = 4 + Math.floor(Math.random() * 10);
+              p.style.cssText = `position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;background:${colors[i % 5]};top:calc(50% - ${sz / 2}px);left:calc(50% - ${sz / 2}px);`;
+              parts.appendChild(p);
+              gsap.to(p, {
+                x: Math.cos(a) * d,
+                y: Math.sin(a) * d,
+                opacity: 0,
+                scale: 0,
+                duration: 0.6 + Math.random() * 0.35,
+                ease: "power2.out",
+              });
+            }
           },
+          [],
           "<"
         )
-        .to(
-          brandRef.current?.querySelectorAll(".brand-letter") ?? [],
-          { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: "expo.out" },
-          "<"
-        )
-        .to(barFillRef.current, { scaleX: 1, duration: 0.9, ease: "power2.inOut" }, "<");
-
-      // PHASE 5 — Exit (3.5 → 4.3s)
-      tl.to(
-        logoBRef.current,
-        { scale: 1.15, opacity: 0, duration: 0.4, ease: "expo.in" },
-        "+=0.3"
-      )
-        .to(
-          [brandRef.current, barFillRef.current?.parentElement],
-          { opacity: 0, duration: 0.3 },
-          "<"
-        )
-        .to(
-          screenRef.current,
-          {
-            clipPath: "inset(0 0 100% 0)",
-            duration: 0.75,
-            ease: "expo.inOut",
-          },
-          "-=0.1"
-        );
-    }, containerRef);
+        .to(nameA, { x: -1000, rotation: -22, scale: 0.3, opacity: 0, duration: 0.38, ease: "power4.in" }, "<")
+        .to(nameB, { scale: 1.18, duration: 0.12, ease: "power2.out" })
+        .to(nameB, { scale: 0, opacity: 0, duration: 0.2, ease: "power2.in" })
+        .to(brand, { opacity: 1, duration: 0.65, ease: "expo.out" })
+        .to(bar, { width: "100%", duration: 1.2, ease: "none" }, "-=0.3");
+    }, rootRef);
 
     return () => ctx.revert();
   }, [onComplete]);
 
   if (!mounted) return null;
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const logoSize = isMobile ? 130 : 180;
-
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none">
+    <div ref={rootRef} className="fixed inset-0 z-[9999]" dir="ltr">
       <div
         ref={screenRef}
-        className="absolute inset-0 overflow-hidden pointer-events-auto"
-        style={{ background: "#cec8a0", clipPath: "inset(0 0 0% 0)" }}
+        className="absolute inset-0 flex items-center justify-center overflow-hidden"
+        style={{ background: "#0a0a0a" }}
       >
-        {/* Center stage */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="relative" style={{ width: logoSize, height: logoSize }}>
-            {/* Speed lines */}
-            <div
-              ref={speedLinesRef}
-              className="absolute top-1/2 -translate-y-1/2"
-              style={{ right: "100%", width: 80, height: 60 }}
-            >
-              {[-20, 0, 20].map((y, i) => (
-                <span
-                  key={i}
-                  className="absolute block"
-                  style={{
-                    top: `calc(50% + ${y}px)`,
-                    right: 0,
-                    width: 60,
-                    height: 2,
-                    background: "#2e2d1f",
-                    opacity: 0.4,
-                    transform: "translateY(-50%)",
-                  }}
-                />
-              ))}
-            </div>
+        <div ref={flashRef} style={{ position: "absolute", inset: 0, background: "white", opacity: 0, pointerEvents: "none", zIndex: 50 }} />
+        <div
+          ref={swRef}
+          style={{
+            position: "absolute",
+            width: 320,
+            height: 320,
+            borderRadius: "50%",
+            border: "4px solid rgba(255,60,0,0.95)",
+            opacity: 0,
+            pointerEvents: "none",
+            zIndex: 49,
+            top: "50%",
+            left: "50%",
+            marginTop: -160,
+            marginLeft: -160,
+          }}
+        />
+        <div ref={partsRef} style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 48 }} />
 
-            {/* Shockwave ring */}
-            <div
-              ref={ringRef}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{
-                width: logoSize,
-                height: logoSize,
-                border: "2px solid rgba(255,255,255,0.8)",
-              }}
-            />
+        <div
+          ref={cracksRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            pointerEvents: "none",
+            zIndex: 47,
+            opacity: 0,
+          }}
+        >
+          <svg width="400" height="160" viewBox="0 0 400 80" style={{ overflow: "visible" }}>
+            <line x1="200" y1="40" x2="70" y2="-5" stroke="#ff3300" strokeWidth="3" opacity="0.95" />
+            <line x1="200" y1="40" x2="40" y2="75" stroke="#ff3300" strokeWidth="2" opacity="0.7" />
+            <line x1="200" y1="40" x2="330" y2="-8" stroke="#ff3300" strokeWidth="3" opacity="0.95" />
+            <line x1="200" y1="40" x2="360" y2="82" stroke="#ff3300" strokeWidth="2" opacity="0.7" />
+            <line x1="200" y1="40" x2="193" y2="-25" stroke="#ff3300" strokeWidth="1.5" opacity="0.6" />
+            <line x1="200" y1="40" x2="207" y2="105" stroke="#ff3300" strokeWidth="1.5" opacity="0.6" />
+            <line x1="200" y1="40" x2="120" y2="90" stroke="#ff3300" strokeWidth="1.5" opacity="0.5" />
+            <line x1="200" y1="40" x2="280" y2="88" stroke="#ff3300" strokeWidth="1.5" opacity="0.5" />
+          </svg>
+        </div>
 
-            {/* Particles */}
-            <div
-              ref={particlesRef}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="particle absolute rounded-sm"
-                  style={{
-                    width: 5,
-                    height: 5,
-                    background: i % 2 === 0 ? "#5A673F" : "#cec8a0",
-                    boxShadow: "0 0 6px rgba(0,0,0,0.2)",
-                  }}
-                />
-              ))}
-            </div>
+        <div
+          ref={lLRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            transform: "translateY(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+            paddingLeft: 20,
+            opacity: 0,
+            pointerEvents: "none",
+            zIndex: 9,
+          }}
+        >
+          <div style={{ width: 140, height: 3, background: "linear-gradient(to right,transparent,rgba(255,60,0,0.7))", borderRadius: 2 }} />
+          <div style={{ width: 90, height: 2, background: "linear-gradient(to right,transparent,rgba(255,60,0,0.45))", borderRadius: 2 }} />
+          <div style={{ width: 115, height: 3, background: "linear-gradient(to right,transparent,rgba(255,60,0,0.6))", borderRadius: 2 }} />
+          <div style={{ width: 70, height: 1.5, background: "linear-gradient(to right,transparent,rgba(255,60,0,0.3))", borderRadius: 2 }} />
+        </div>
 
-            {/* Logo A */}
-            <img
-              ref={logoARef}
-              src={logoA}
-              alt=""
-              className="absolute top-1/2 left-1/2 object-contain"
-              style={{
-                width: logoSize,
-                height: logoSize,
-                transform: "translate(-50%, -50%)",
-                borderRadius: 22,
-                filter: "drop-shadow(0 12px 40px rgba(0,0,0,0.18))",
-                zIndex: 1,
-              }}
-            />
+        <div
+          ref={lRRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: 0,
+            transform: "translateY(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+            paddingRight: 20,
+            opacity: 0,
+            pointerEvents: "none",
+            zIndex: 9,
+          }}
+        >
+          <div style={{ width: 140, height: 3, background: "linear-gradient(to left,transparent,rgba(61,186,90,0.7))", borderRadius: 2 }} />
+          <div style={{ width: 90, height: 2, background: "linear-gradient(to left,transparent,rgba(61,186,90,0.45))", borderRadius: 2 }} />
+          <div style={{ width: 115, height: 3, background: "linear-gradient(to left,transparent,rgba(61,186,90,0.6))", borderRadius: 2 }} />
+          <div style={{ width: 70, height: 1.5, background: "linear-gradient(to left,transparent,rgba(61,186,90,0.3))", borderRadius: 2 }} />
+        </div>
 
-            {/* Logo B */}
-            <img
-              ref={logoBRef}
-              src={logoB}
-              alt="Azolla"
-              className="absolute top-1/2 left-1/2 object-contain"
-              style={{
-                width: logoSize,
-                height: logoSize,
-                transform: "translate(-50%, -50%)",
-                borderRadius: 22,
-                filter: "drop-shadow(0 12px 40px rgba(0,0,0,0.18))",
-                zIndex: 2,
-              }}
-            />
-          </div>
-
-          {/* Brand name */}
+        <div
+          ref={nameARef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            opacity: 0,
+            zIndex: 10,
+            textAlign: "center",
+            whiteSpace: "nowrap",
+          }}
+        >
           <div
-            ref={brandRef}
-            className="mt-8 flex overflow-hidden"
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 700,
-              color: "#2e2d1f",
-              fontSize: isMobile ? 32 : 44,
-              letterSpacing: "0.15em",
+              fontFamily: "'Nosifer',cursive",
+              fontSize: 46,
+              color: "#dd1a00",
+              letterSpacing: 2,
+              lineHeight: 1.3,
+              textShadow: "0 0 18px rgba(220,0,0,1),0 0 40px rgba(180,0,0,0.6)",
             }}
           >
-            {"AZOLLA".split("").map((ch, i) => (
-              <span key={i} className="brand-letter inline-block">
-                {ch}
-              </span>
-            ))}
+            عارف دائك
           </div>
-
-          {/* Loading bar */}
           <div
-            className="mt-5 overflow-hidden rounded-full"
-            style={{ width: 160, height: 2, background: "rgba(46,45,31,0.15)" }}
+            style={{
+              fontFamily: "'Nosifer',cursive",
+              fontSize: 36,
+              color: "#bb1500",
+              letterSpacing: 2,
+              lineHeight: 1.3,
+              textShadow: "0 0 14px rgba(200,0,0,0.9),0 0 30px rgba(160,0,0,0.5)",
+            }}
           >
-            <div
-              ref={barFillRef}
-              className="h-full"
-              style={{ background: "#5A673F", width: "100%" }}
-            />
+            و دواك
           </div>
         </div>
 
-        {/* Flash overlay */}
         <div
-          ref={flashRef}
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "white", zIndex: 10000 }}
-        />
+          ref={nameBRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            opacity: 1,
+            zIndex: 11,
+            textAlign: "center",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "'Metal Mania',cursive",
+              fontSize: 96,
+              color: "#3dba5a",
+              letterSpacing: 4,
+              lineHeight: 1,
+              textShadow: "0 0 20px rgba(61,186,90,1),0 0 50px rgba(40,160,70,0.7)",
+            }}
+          >
+            AZOLLA
+          </div>
+        </div>
+
+        <div
+          ref={vsRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            fontFamily: "'Metal Mania',cursive",
+            fontSize: 36,
+            color: "#333",
+            opacity: 0,
+            zIndex: 8,
+            pointerEvents: "none",
+            textShadow: "0 0 10px rgba(255,255,255,0.1)",
+          }}
+        >
+          VS
+        </div>
+
+        <div
+          ref={brandRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 18,
+            opacity: 0,
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "'Metal Mania',cursive",
+              fontSize: 92,
+              color: "#3dba5a",
+              letterSpacing: 6,
+              textShadow: "0 0 25px rgba(61,186,90,1),0 0 60px rgba(40,160,70,0.6)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            AZOLLA
+          </div>
+          <div style={{ width: 250, height: 3, background: "rgba(61,186,90,0.15)", borderRadius: 2, overflow: "hidden" }}>
+            <div
+              ref={barRef}
+              style={{
+                height: "100%",
+                width: "0%",
+                background: "#3dba5a",
+                borderRadius: 2,
+                boxShadow: "0 0 12px rgba(61,186,90,1)",
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
