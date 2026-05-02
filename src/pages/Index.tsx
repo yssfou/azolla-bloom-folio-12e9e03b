@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { initGsapScrollEffects } from "@/lib/gsapScroll";
-import { Loader } from "@/components/azola/Loader";
+import { LoadingScreen } from "@/components/azola/LoadingScreen";
 import { Navbar } from "@/components/azola/Navbar";
 import { Hero } from "@/components/azola/Hero";
 import { About } from "@/components/azola/About";
@@ -61,11 +61,10 @@ const PageContent = ({ loading }: { loading: boolean }) => {
 };
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(t);
-  }, []);
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !sessionStorage.getItem("azolla_loaded");
+  });
 
   // Smooth scroll progress bar at top of page
   const { scrollYProgress } = useScroll();
@@ -73,7 +72,14 @@ const Index = () => {
 
   return (
     <I18nProvider>
-      <Loader show={loading} />
+      {loading && (
+        <LoadingScreen
+          onComplete={() => {
+            sessionStorage.setItem("azolla_loaded", "1");
+            setLoading(false);
+          }}
+        />
+      )}
 
       {/* Global scroll progress */}
       <motion.div
