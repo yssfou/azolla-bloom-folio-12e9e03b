@@ -30,7 +30,11 @@ export const Navbar = () => {
         }`}
       >
         <div
-          className="mx-auto max-w-7xl px-5 md:px-8 flex items-center justify-between rounded-full glass-dark shadow-deep transition-all duration-500"
+          className={`mx-auto max-w-7xl px-5 md:px-8 flex items-center justify-between rounded-full transition-all duration-500 ${
+            scrolled
+              ? "glass-dark shadow-deep"
+              : "bg-transparent"
+          }`}
           style={{ paddingTop: scrolled ? 10 : 14, paddingBottom: scrolled ? 10 : 14 }}
         >
           {/* Logo */}
