@@ -60,12 +60,20 @@ const PageContent = () => {
 };
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 1600);
+    return () => clearTimeout(t);
+  }, []);
+
   // Smooth scroll progress bar at top of page
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.4 });
 
   return (
     <I18nProvider>
+      <Loader show={loading} />
+
       {/* Global scroll progress */}
       <motion.div
         aria-hidden
