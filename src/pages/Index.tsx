@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { initGsapScrollEffects } from "@/lib/gsapScroll";
-import { Loader } from "@/components/azola/Loader";
 import { Navbar } from "@/components/azola/Navbar";
 import { Hero } from "@/components/azola/Hero";
 import { About } from "@/components/azola/About";
@@ -16,13 +15,12 @@ import { Contact } from "@/components/azola/Contact";
 import { Footer } from "@/components/azola/Footer";
 import { SectionTransition } from "@/components/azola/SectionTransition";
 
-const PageContent = ({ loading }: { loading: boolean }) => {
+const PageContent = () => {
   const { lang } = useI18n();
   const cleanupRef = useRef<null | (() => void)>(null);
 
-  // Re-init GSAP scroll effects after loader is gone and whenever language changes
+  // Re-init GSAP scroll effects whenever language changes
   useEffect(() => {
-    if (loading) return;
     const id = window.requestAnimationFrame(() => {
       window.setTimeout(() => {
         cleanupRef.current?.();
@@ -34,7 +32,7 @@ const PageContent = ({ loading }: { loading: boolean }) => {
       cleanupRef.current?.();
       cleanupRef.current = null;
     };
-  }, [loading, lang]);
+  }, [lang]);
 
   return (
     <main className="relative bg-background text-foreground">
@@ -61,20 +59,12 @@ const PageContent = ({ loading }: { loading: boolean }) => {
 };
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1400);
-    return () => clearTimeout(t);
-  }, []);
-
   // Smooth scroll progress bar at top of page
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.4 });
 
   return (
     <I18nProvider>
-      <Loader show={loading} />
-
       {/* Global scroll progress */}
       <motion.div
         aria-hidden
@@ -82,7 +72,7 @@ const Index = () => {
         className="fixed top-0 inset-x-0 h-[2px] origin-start z-[60] bg-gradient-fresh shadow-glow pointer-events-none"
       />
 
-      <PageContent loading={loading} />
+      <PageContent />
     </I18nProvider>
   );
 };
