@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { initGsapScrollEffects } from "@/lib/gsapScroll";
+import { Loader } from "@/components/azola/Loader";
 import { Navbar } from "@/components/azola/Navbar";
 import { Hero } from "@/components/azola/Hero";
 import { About } from "@/components/azola/About";
