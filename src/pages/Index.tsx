@@ -59,20 +59,12 @@ const PageContent = () => {
 };
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1400);
-    return () => clearTimeout(t);
-  }, []);
-
   // Smooth scroll progress bar at top of page
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.4 });
 
   return (
     <I18nProvider>
-      <Loader show={loading} />
-
       {/* Global scroll progress */}
       <motion.div
         aria-hidden
@@ -80,7 +72,7 @@ const Index = () => {
         className="fixed top-0 inset-x-0 h-[2px] origin-start z-[60] bg-gradient-fresh shadow-glow pointer-events-none"
       />
 
-      <PageContent loading={loading} />
+      <PageContent />
     </I18nProvider>
   );
 };
