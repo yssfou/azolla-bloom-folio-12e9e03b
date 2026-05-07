@@ -19,9 +19,8 @@ const PageContent = () => {
   const { lang } = useI18n();
   const cleanupRef = useRef<null | (() => void)>(null);
 
-  // Re-init GSAP scroll effects after loader is gone and whenever language changes
+  // Re-init GSAP scroll effects whenever language changes
   useEffect(() => {
-    if (loading) return;
     const id = window.requestAnimationFrame(() => {
       window.setTimeout(() => {
         cleanupRef.current?.();
@@ -33,7 +32,7 @@ const PageContent = () => {
       cleanupRef.current?.();
       cleanupRef.current = null;
     };
-  }, [loading, lang]);
+  }, [lang]);
 
   return (
     <main className="relative bg-background text-foreground">
