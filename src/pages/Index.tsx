@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { initGsapScrollEffects } from "@/lib/gsapScroll";
-import { Loader } from "@/components/azola/Loader";
 import { Navbar } from "@/components/azola/Navbar";
 import { Hero } from "@/components/azola/Hero";
 import { About } from "@/components/azola/About";
@@ -16,7 +15,7 @@ import { Contact } from "@/components/azola/Contact";
 import { Footer } from "@/components/azola/Footer";
 import { SectionTransition } from "@/components/azola/SectionTransition";
 
-const PageContent = ({ loading }: { loading: boolean }) => {
+const PageContent = () => {
   const { lang } = useI18n();
   const cleanupRef = useRef<null | (() => void)>(null);
 
