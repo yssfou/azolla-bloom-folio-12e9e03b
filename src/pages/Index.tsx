@@ -66,8 +66,6 @@ const Index = () => {
 
   return (
     <I18nProvider>
-      <CinematicLoader />
-
       {/* Global scroll progress */}
       <motion.div
         aria-hidden
