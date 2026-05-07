@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { initGsapScrollEffects } from "@/lib/gsapScroll";
-import { Loader } from "@/components/azola/Loader";
+import { CinematicLoader } from "@/components/azola/CinematicLoader";
 import { Navbar } from "@/components/azola/Navbar";
 import { Hero } from "@/components/azola/Hero";
 import { About } from "@/components/azola/About";
@@ -60,19 +60,13 @@ const PageContent = () => {
 };
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1600);
-    return () => clearTimeout(t);
-  }, []);
-
   // Smooth scroll progress bar at top of page
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, mass: 0.4 });
 
   return (
     <I18nProvider>
-      <Loader show={loading} />
+      <CinematicLoader />
 
       {/* Global scroll progress */}
       <motion.div
