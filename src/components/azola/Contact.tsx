@@ -15,11 +15,12 @@ export const Contact = () => {
 
     const name = (e.currentTarget.elements.namedItem("name") as HTMLInputElement)?.value || "";
     const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value || "";
+    const phone = (e.currentTarget.elements.namedItem("phone") as HTMLInputElement)?.value || "";
     const message = (e.currentTarget.elements.namedItem("message") as HTMLTextAreaElement)?.value || "";
 
-    if (!name.trim() || !email.trim() || !message.trim()) return;
+    if (!name.trim() || !email.trim() || !phone.trim() || !message.trim()) return;
 
-    const text = `🌿 New Contact from Azola Website!%0A%0A👤 Name: ${name}%0A📧 Email: ${email}%0A💬 Message: ${message}`;
+    const text = `🌿 New Contact from Azola Website!%0A%0A👤 Name: ${name}%0A📧 Email: ${email}%0A📞 Phone: ${phone}%0A💬 Message: ${message}`;
 
     window.open(`https://wa.me/21622476723?text=${text}`, "_blank");
 
@@ -64,6 +65,16 @@ export const Contact = () => {
                   required
                   type="email"
                   maxLength={100}
+                  className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-mint/70 mb-2">{t.contact.phone}</label>
+                <input
+                  name="phone"
+                  required
+                  type="tel"
+                  maxLength={30}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
                 />
               </div>
