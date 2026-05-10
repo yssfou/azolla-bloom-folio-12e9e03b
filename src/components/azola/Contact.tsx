@@ -9,10 +9,31 @@ const ease = [0.16, 1, 0.3, 1] as const;
 export const Contact = () => {
   const { t } = useI18n();
   const [sent, setSent] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const trimmedName = name.trim().slice(0, 100);
+    const trimmedPhone = phone.trim().slice(0, 30);
+    const trimmedMessage = message.trim().slice(0, 1000);
+    if (!trimmedName || !trimmedPhone || !trimmedMessage) return;
+
+    const text =
+      `${t.contact.tag ?? "Contact"} — AZOLA\n\n` +
+      `${t.contact.name}: ${trimmedName}\n` +
+      `${t.contact.phone}: ${trimmedPhone}\n` +
+      `${t.contact.message}: ${trimmedMessage}`;
+
+    const url = `https://wa.me/21622476723?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+
     setSent(true);
+    setName("");
+    setPhone("");
+    setMessage("");
     setTimeout(() => setSent(false), 3500);
   };
 
@@ -40,6 +61,9 @@ export const Contact = () => {
                 <input
                   required
                   type="text"
+                  maxLength={100}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
                 />
               </div>
@@ -48,6 +72,9 @@ export const Contact = () => {
                 <input
                   required
                   type="tel"
+                  maxLength={30}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
                 />
               </div>
@@ -56,6 +83,9 @@ export const Contact = () => {
                 <textarea
                   required
                   rows={4}
+                  maxLength={1000}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all resize-none"
                 />
               </div>
