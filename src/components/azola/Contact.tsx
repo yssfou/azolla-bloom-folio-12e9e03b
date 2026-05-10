@@ -9,31 +9,22 @@ const ease = [0.16, 1, 0.3, 1] as const;
 export const Contact = () => {
   const { t } = useI18n();
   const [sent, setSent] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
 
-  const onSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const trimmedName = name.trim().slice(0, 100);
-    const trimmedPhone = phone.trim().slice(0, 30);
-    const trimmedMessage = message.trim().slice(0, 1000);
-    if (!trimmedName || !trimmedPhone || !trimmedMessage) return;
+    const name = (e.currentTarget.elements.namedItem("name") as HTMLInputElement)?.value || "";
+    const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value || "";
+    const message = (e.currentTarget.elements.namedItem("message") as HTMLTextAreaElement)?.value || "";
 
-    const text =
-      `${t.contact.tag ?? "Contact"} — AZOLA\n\n` +
-      `${t.contact.name}: ${trimmedName}\n` +
-      `${t.contact.phone}: ${trimmedPhone}\n` +
-      `${t.contact.message}: ${trimmedMessage}`;
+    if (!name.trim() || !email.trim() || !message.trim()) return;
 
-    const url = `https://wa.me/21622476723?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    const text = `🌿 New Contact from Azola Website!%0A%0A👤 Name: ${name}%0A📧 Email: ${email}%0A💬 Message: ${message}`;
+
+    window.open(`https://wa.me/21622476723?text=${text}`, "_blank");
 
     setSent(true);
-    setName("");
-    setPhone("");
-    setMessage("");
+    e.currentTarget.reset();
     setTimeout(() => setSent(false), 3500);
   };
 
@@ -48,7 +39,7 @@ export const Contact = () => {
         <div className="mt-16 grid lg:grid-cols-2 gap-10 items-start">
           {/* Form */}
           <motion.form
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -59,33 +50,30 @@ export const Contact = () => {
               <div>
                 <label className="block text-sm text-mint/70 mb-2">{t.contact.name}</label>
                 <input
+                  name="name"
                   required
                   type="text"
                   maxLength={100}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm text-mint/70 mb-2">{t.contact.phone}</label>
+                <label className="block text-sm text-mint/70 mb-2">Email</label>
                 <input
+                  name="email"
                   required
-                  type="tel"
-                  maxLength={30}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  type="email"
+                  maxLength={100}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
                 />
               </div>
               <div>
                 <label className="block text-sm text-mint/70 mb-2">{t.contact.message}</label>
                 <textarea
+                  name="message"
                   required
                   rows={4}
                   maxLength={1000}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all resize-none"
                 />
               </div>
