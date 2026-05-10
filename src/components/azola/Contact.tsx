@@ -69,6 +69,16 @@ export const Contact = () => {
                 />
               </div>
               <div>
+                <label className="block text-sm text-mint/70 mb-2">{t.contact.phone}</label>
+                <input
+                  name="phone"
+                  required
+                  type="tel"
+                  maxLength={30}
+                  className="w-full bg-deep/40 border border-mint/20 rounded-2xl px-4 py-3.5 text-mint placeholder:text-mint/40 focus:outline-none focus:border-fresh focus:shadow-glow transition-all"
+                />
+              </div>
+              <div>
                 <label className="block text-sm text-mint/70 mb-2">{t.contact.message}</label>
                 <textarea
                   name="message"
