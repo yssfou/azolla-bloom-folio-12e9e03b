@@ -15,11 +15,12 @@ export const Contact = () => {
 
     const name = (e.currentTarget.elements.namedItem("name") as HTMLInputElement)?.value || "";
     const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value || "";
+    const phone = (e.currentTarget.elements.namedItem("phone") as HTMLInputElement)?.value || "";
     const message = (e.currentTarget.elements.namedItem("message") as HTMLTextAreaElement)?.value || "";
 
-    if (!name.trim() || !email.trim() || !message.trim()) return;
+    if (!name.trim() || !email.trim() || !phone.trim() || !message.trim()) return;
 
-    const text = `🌿 New Contact from Azola Website!%0A%0A👤 Name: ${name}%0A📧 Email: ${email}%0A💬 Message: ${message}`;
+    const text = `🌿 New Contact from Azola Website!%0A%0A👤 Name: ${name}%0A📧 Email: ${email}%0A📞 Phone: ${phone}%0A💬 Message: ${message}`;
 
     window.open(`https://wa.me/21622476723?text=${text}`, "_blank");
 
